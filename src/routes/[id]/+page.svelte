@@ -1,11 +1,69 @@
 <script lang="ts">
-  import type { PageData } from "./$types";
-
-  export let data: PageData
+  import LeftArrowIcon from "$lib/icons/LeftArrowIcon.svelte";
   
-  const list = data.list
+  import type { PageData } from "./$types";
+  import type { TodoData } from "$lib/db.svelte";
+
+  export let data: PageData;
+  let list = data.list;
+
+  const addTodo = (event: KeyboardEvent) => {
+    if (list && event.key === "Enter") {
+      const newTodo: TodoData = {
+        id: window.crypto.randomUUID(),
+        label: text,
+        state: "tbd",
+      }
+      list.todos.push(newTodo);
+      text = "";
+    }
+  };
+
+  const toggleState = (todo: TodoData) => () => {
+    if(todo.state === "done") {
+      todo.state = "tbd";
+    } else {
+      todo.state = "done";
+    }
+  };
+
+  let text = "";
 </script>
 
 {#if list}
-  <h1>{list.label}</h1>
+  <header>
+    <h1>{list.label}</h1>
+    <a href="/" class="btn">
+      <LeftArrowIcon />
+    </a>
+  </header>
+  <div class="container">
+    <input type="text" bind:value={text}  class="text-input" placeholder="Inserisci todo..." onkeydown={addTodo}/>
+    <section class="todos">
+      <ul>
+        {#each list.todos as todo (todo.id)}
+          <li>
+            <div class="item">
+              <div>
+                <input type="checkbox" checked={todo.state == "done"} onchange={(toggleState(todo))} />
+                <span class:completed={todo.state == "done"}>{todo.label}</span>
+                <button>&times;</button>
+              </div>
+            </div>
+          </li>
+        {/each}
+        <li>
+          <div class="item">
+            <div class="hidden">
+              <input type="checkbox" />
+              <span> Editing todo</span>
+              <button>&times;</button>
+            </div>
+
+            <input class="text-input" type="text" value="Editing Todo" />
+          </div>
+        </li>
+      </ul>
+    </section>
+  </div>
 {/if}
