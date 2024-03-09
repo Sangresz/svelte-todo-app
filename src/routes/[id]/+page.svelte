@@ -1,5 +1,6 @@
 <script lang="ts">
   import LeftArrowIcon from "$lib/icons/LeftArrowIcon.svelte";
+  import Todo from "$lib/components/Todo.svelte";
   
   import type { PageData } from "./$types";
   import type { TodoData } from "$lib/db.svelte";
@@ -19,13 +20,10 @@
     }
   };
 
-  const toggleState = (todo: TodoData) => () => {
-    if(todo.state === "done") {
-      todo.state = "tbd";
-    } else {
-      todo.state = "done";
-    }
-  };
+  const deleteTodo = (id: string) => {
+    let todos = list?.todos.filter((todo) => todo.id != id)
+    if(list && todos) list.todos = todos
+  }
 
   let text = "";
 </script>
@@ -42,15 +40,7 @@
     <section class="todos">
       <ul>
         {#each list.todos as todo (todo.id)}
-          <li>
-            <div class="item">
-              <div>
-                <input type="checkbox" checked={todo.state == "done"} onchange={(toggleState(todo))} />
-                <span class:completed={todo.state == "done"}>{todo.label}</span>
-                <button>&times;</button>
-              </div>
-            </div>
-          </li>
+          <Todo {todo} {deleteTodo} />
         {/each}
         <li>
           <div class="item">

@@ -4,12 +4,11 @@
   import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
 
   import type { ListData } from "$lib/db.svelte";
-  import type { TodoData } from "$lib/db.svelte";
 
   const { list } : {list: ListData} = $props<{list: ListData}>();
   
-  const completedTodos = list.todos.filter((todo: TodoData) => todo.state == 'done').length;
-  const percentage = `${(completedTodos / list.todos.length) * 100 || 0}%`;
+  const completedTodos = list.todos.filter((todo) => todo.state == 'done').length;
+  const percentage = `${Math.round((completedTodos / list.todos.length) * 100) || 0}%`;
 </script>
 
 <div class="list">
