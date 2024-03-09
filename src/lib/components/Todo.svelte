@@ -10,14 +10,25 @@
       todo.state = "done";
     }
   };
+
+  const updateTodo = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      todo.label = text
+      editable = false
+    }
+  }
+
+  let editable = $state(false);
+  let text = $state(todo.label);
 </script>
 
 <li>
   <div class="item">
-    <div>
+    <div class:hidden={editable} on:dblclick={() => editable = !editable} role="textbox" tabindex={0}>
       <input type="checkbox" checked={todo.state == "done"} onchange={() => (toggleState(todo))} />
       <span class:completed={todo.state == "done"}>{todo.label}</span>
       <button onclick={() => deleteTodo(todo.id)}>&times;</button>
     </div>
+    <input class="text-input" class:hidden={!editable} type="text" bind:value={text} onkeydown={updateTodo} />
   </div>
 </li>

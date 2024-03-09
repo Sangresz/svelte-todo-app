@@ -42,17 +42,6 @@
         {#each list.todos as todo (todo.id)}
           <Todo {todo} {deleteTodo} />
         {/each}
-        <li>
-          <div class="item">
-            <div class="hidden">
-              <input type="checkbox" />
-              <span> Editing todo</span>
-              <button>&times;</button>
-            </div>
-
-            <input class="text-input" type="text" value="Editing Todo" />
-          </div>
-        </li>
       </ul>
     </section>
   </div>
