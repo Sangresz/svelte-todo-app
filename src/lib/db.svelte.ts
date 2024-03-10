@@ -48,12 +48,17 @@ export function createDb() {
     return db.find(list => list.id === id)
   }
 
+  function deleteList(id: string) {
+    db = db.filter(list => list.id !== id)
+  }
+
   return {
     get lists() {
       return db
     },
     addList,
-    getList
+    getList,
+    deleteList
   }
 }
 
