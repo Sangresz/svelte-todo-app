@@ -52,13 +52,19 @@ export function createDb() {
     db = db.filter(list => list.id !== id)
   }
 
+  function deleteTodo(idList: string, idTodo: string) {
+    const list = getList(idList)
+    list!.todos = list!.todos.filter(todo => todo.id !== idTodo)
+  }
+
   return {
     get lists() {
       return db
     },
     addList,
     getList,
-    deleteList
+    deleteList,
+    deleteTodo
   }
 }
 

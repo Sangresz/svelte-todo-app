@@ -3,10 +3,10 @@
   import RightArrowIcon from "$lib/icons/RightArrowIcon.svelte";
   import DeleteIcon from "$lib/icons/DeleteIcon.svelte";
   import type { ListData } from "$lib/db.svelte";
+  import { db } from "$lib/db.svelte";
 
-  const { list, deleteList } = $props<{
+  const { list } = $props<{
     list: ListData;
-    deleteList: Function;
   }>();
 
   let disabled = $state(true);
@@ -15,7 +15,7 @@
   const handleDelete = () => {
     let confirm = window.confirm("Are you sure you want to delete this list?");
     if (confirm)
-      deleteList(list.id);
+      db.deleteList(list.id);
   };
 
   const toggleEdit = () => {

@@ -20,11 +20,6 @@
     }
   };
 
-  const deleteTodo = (id: string) => {
-    let todos = list?.todos.filter((todo) => todo.id != id)
-    if(list && todos) list.todos = todos
-  }
-
   let text = "";
 </script>
 
@@ -40,7 +35,7 @@
     <section class="todos">
       <ul>
         {#each list.todos as todo (todo.id)}
-          <Todo {todo} {deleteTodo} />
+          <Todo {todo} listId={list.id} />
         {/each}
       </ul>
     </section>

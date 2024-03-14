@@ -2,10 +2,6 @@
   import { db } from "$lib/db.svelte";
   import List from "$lib/components/List.svelte";
 
-  const deleteList = (id: string) => {
-    db.deleteList(id);
-  };
-
   let string = $state("")
 </script>
 
@@ -18,6 +14,6 @@
     }
   }}/>
   {#each db.lists as list (list.id)}
-    <List {list} {deleteList} />
+    <List {list} />
   {/each}
 </div>
